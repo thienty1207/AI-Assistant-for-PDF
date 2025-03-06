@@ -2,7 +2,7 @@ import streamlit as st
 import time
 import os
 from dotenv import load_dotenv
-from ui_helpers import upload_pdf, send_message, get_chat_history, get_all_sessions, display_message
+from ui_helpers import upload_pdf, send_message, get_chat_history, get_all_sessions, display_message, reload_session
 
 # Load environment variables
 load_dotenv()
@@ -63,12 +63,14 @@ with st.sidebar:
             selected_idx = [f"{s['pdf_name']} ({s['session_id'][:8]}...)" for s in sessions].index(selected_session)
             session_id = sessions[selected_idx]["session_id"]
             
-            # Set session_id and load messages
-            st.session_state.session_id = session_id
-            history = get_chat_history(session_id)
-            st.session_state.messages = history
-            st.success(f"Loaded session: {sessions[selected_idx]['pdf_name']}")
-            st.rerun()
+            # Reload session on backend
+            if reload_session(session_id):
+                # Set session_id and load messages
+                st.session_state.session_id = session_id
+                history = get_chat_history(session_id)
+                st.session_state.messages = history
+                st.success(f"Loaded session: {sessions[selected_idx]['pdf_name']}")
+                st.rerun()
 
 # Main chat interface
 st.subheader("Chat")
@@ -83,7 +85,6 @@ user_input = st.chat_input("Type your message here...")
 if user_input:
     # Add user message to chat
     st.session_state.messages.append({"role": "user", "content": user_input})
-    display_message("user", user_input)
     
     # Get AI response
     response = send_message(user_input)
@@ -91,7 +92,7 @@ if user_input:
     if response:
         # Add AI response to chat
         st.session_state.messages.append({"role": "assistant", "content": response})
-        display_message("assistant", response)
+        st.rerun()  # Rerun to display the new messages
 
 # Footer
 st.divider()

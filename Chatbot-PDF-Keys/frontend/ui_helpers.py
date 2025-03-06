@@ -122,6 +122,30 @@ def get_all_sessions() -> List[Dict[str, Any]]:
 def display_message(role: str, content: str):
     """Display a chat message with appropriate styling"""
     if role == "user":
-        st.markdown(f"**You:** {content}")
+        st.markdown("""
+        <div style="border: 1px solid #2e86de; border-radius: 10px; padding: 10px; margin-bottom: 10px; background-color: #f1f8ff; color: #000000;">
+            <p><strong>👤 You:</strong> {}</p>
+        </div>
+        """.format(content), unsafe_allow_html=True)
     else:
-        st.markdown(f"**Assistant:** {content}") 
+        st.markdown("""
+        <div style="border: 1px solid #10ac84; border-radius: 10px; padding: 10px; margin-bottom: 10px; background-color: #e8f5e9; color: #000000;">
+            <p><strong>🤖 Assistant:</strong> {}</p>
+        </div>
+        """.format(content), unsafe_allow_html=True)
+
+def reload_session(session_id: str) -> bool:
+    """Reload a session's PDF data into memory on the backend"""
+    response = requests.get(
+        f"{API_URL}/reload_session/{session_id}",
+        headers=HEADERS
+    )
+    
+    if response.status_code == 200:
+        return True
+    elif response.status_code in [401, 403]:
+        st.error("Authentication failed. Invalid API key.")
+        return False
+    else:
+        st.error(f"Error reloading session: {response.text}")
+        return False 

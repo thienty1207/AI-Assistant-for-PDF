@@ -144,4 +144,41 @@ async def get_chat_history(
     Get chat history for a specific session
     """
     messages = db.get_session_messages(session_id)
-    return {"session_id": session_id, "messages": messages} 
+    return {"session_id": session_id, "messages": messages}
+
+@app.get("/reload_session/{session_id}")
+async def reload_session(
+    session_id: str,
+    api_key: str = Depends(get_api_key)
+):
+    """
+    Reload a session's PDF data into memory
+    """
+    # Check if session exists in database
+    sessions = db.get_all_sessions()
+    session = next((s for s in sessions if s["session_id"] == session_id), None)
+    
+    if not session:
+        raise HTTPException(status_code=404, detail="Session not found in database")
+    
+    # Get chat history to find the summary
+    messages = db.get_session_messages(session_id)
+    
+    # Find the summary message (first assistant message)
+    summary = None
+    for msg in messages:
+        if msg["role"] == "assistant" and "PDF Summary:" in msg["content"]:
+            summary = msg["content"].replace("PDF Summary: ", "")
+            break
+    
+    if not summary:
+        raise HTTPException(status_code=404, detail="Could not find PDF summary in chat history")
+    
+    # Add to pdf_summaries with empty text (we don't have the original text anymore)
+    # This is enough to allow chat to work
+    pdf_summaries[session_id] = {
+        "text": "PDF text not available for reloaded sessions",
+        "summary": summary
+    }
+    
+    return {"success": True, "session_id": session_id} 
