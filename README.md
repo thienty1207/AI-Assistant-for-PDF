@@ -21,31 +21,28 @@ provide efficient responses.
 • Frontend: Streamlit (for user interaction and file upload) 
 
 ## Project Structure 
-- backend/
-  o main.py  # FastAPI application 
-  o db.py  # SQLite database setup 
-  o summarizer.py  # PDF processing and summarization logic 
-  o models.py  # Database models and schemas 
+### Backend
+- `main.py` - FastAPI application 
+- `db.py` - SQLite database setup 
+- `summarizer.py` - PDF processing and summarization logic 
+- `models.py` - Database models and schemas 
 
-- frontend/ 
-  o app.py  # Streamlit application 
-  o ui_helpers.py  # Helper functions for UI components 
- 
-
-
+### Frontend
+- `app.py` - Streamlit application 
+- `ui_helpers.py` - Helper functions for UI components 
 
 ## Functionality 
-1. Upload a PDF File  
-o The user uploads a PDF file via the Streamlit frontend. 
-o The file is sent to the backend for processing. 
-2. Summarization  
-o The backend extracts text from the PDF. 
-o LangChain interacts with deepseek-r1:8b (via Ollama) to generate a summary. 
-3. Chat with History  
-o Users can ask questions about the uploaded document. 
-o The chatbot maintains conversation history using SQLite. 
-4. User Interface  
-o Streamlit provides an intuitive UI for file uploads and chat interactions. 
+1. **Upload a PDF File**  
+   - The user uploads a PDF file via the Streamlit frontend. 
+   - The file is sent to the backend for processing. 
+2. **Summarization**  
+   - The backend extracts text from the PDF. 
+   - LangChain interacts with deepseek-r1:8b (via Ollama) to generate a summary. 
+3. **Chat with History**  
+   - Users can ask questions about the uploaded document. 
+   - The chatbot maintains conversation history using SQLite. 
+4. **User Interface**  
+   - Streamlit provides an intuitive UI for file uploads and chat interactions. 
 
 ## Next Steps 
 • Implement backend API with FastAPI to handle file uploads and processing. 
