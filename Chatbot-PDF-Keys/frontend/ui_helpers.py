@@ -76,7 +76,7 @@ def get_chat_history(session_id: str) -> List[Dict[str, Any]]:
     )
     
     if response.status_code == 200:
-        return response.json()["history"]
+        return response.json()["messages"]
     elif response.status_code in [401, 403]:
         st.error("Authentication failed. Invalid API key.")
         return []
@@ -121,5 +121,7 @@ def get_all_sessions() -> List[Dict[str, Any]]:
 
 def display_message(role: str, content: str):
     """Display a chat message with appropriate styling"""
-    with st.chat_message(role):
-        st.markdown(content) 
+    if role == "user":
+        st.markdown(f"**You:** {content}")
+    else:
+        st.markdown(f"**Assistant:** {content}") 
