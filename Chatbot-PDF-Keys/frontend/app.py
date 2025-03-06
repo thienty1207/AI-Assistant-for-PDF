@@ -14,7 +14,7 @@ if not API_KEY:
     st.stop()
 
 st.set_page_config(
-    page_title="PDF Summarization Chatbot",
+    page_title="Ho Thien Ty AI Assistant",
     
     layout="wide"
 )
@@ -27,7 +27,7 @@ if "session_id" not in st.session_state:
     st.session_state.session_id = None
 
 # App title
-st.title("PDF Summarization Chatbot")
+st.title("Ho Thien Ty AI Assistant")
 
 # Sidebar for PDF upload and session management
 with st.sidebar:
@@ -98,4 +98,4 @@ else:
 
 # Footer
 st.divider()
-st.caption("PDF Summarization Chatbot using FastAPI, LangChain, and Ollama") 
+st.caption("Ho Thien Ty AI Assistant using FastAPI, LangChain, and Ollama") 
