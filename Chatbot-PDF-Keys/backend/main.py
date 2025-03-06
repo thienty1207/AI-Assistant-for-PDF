@@ -1,9 +1,10 @@
-from fastapi import FastAPI, HTTPException, UploadFile, File, Form, Depends
+from fastapi import FastAPI, HTTPException, UploadFile, File, Form, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
 import base64
 import uuid
 import os
-from typing import Optional
+import time
+from typing import Optional, Dict
 from dotenv import load_dotenv
 
 from db import ChatDatabase
@@ -31,6 +32,13 @@ summarizer = PDFSummarizer()
 
 # Store PDF summaries in memory for quick access
 pdf_summaries = {}
+
+# Simple in-memory cache for sessions endpoint
+sessions_cache = {
+    "data": None,
+    "timestamp": 0
+}
+CACHE_TIMEOUT = 5  # 5 seconds
 
 @app.post("/summarize")
 async def summarize_pdf(
@@ -107,12 +115,25 @@ async def chat(
     }
 
 @app.get("/sessions")
-async def get_sessions(api_key: str = Depends(get_api_key)):
+async def get_sessions(api_key: str = Depends(get_api_key), request: Request = None):
     """
-    Get all chat sessions
+    Get all chat sessions with caching to reduce database load
     """
+    current_time = time.time()
+    
+    # Return cached data if it's still fresh
+    if sessions_cache["data"] and current_time - sessions_cache["timestamp"] < CACHE_TIMEOUT:
+        return sessions_cache["data"]
+    
+    # Otherwise, fetch from database
     sessions = db.get_all_sessions()
-    return {"sessions": sessions}
+    result = {"sessions": sessions}
+    
+    # Update cache
+    sessions_cache["data"] = result
+    sessions_cache["timestamp"] = current_time
+    
+    return result
 
 @app.get("/history/{session_id}")
 async def get_chat_history(

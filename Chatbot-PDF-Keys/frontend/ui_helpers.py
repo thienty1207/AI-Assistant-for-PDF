@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 import json
 import os
+import time
 from typing import List, Dict, Any, Optional
 from dotenv import load_dotenv
 
@@ -16,6 +17,14 @@ if not API_KEY:
 
 # Headers for API requests
 HEADERS = {"X-API-Key": API_KEY}
+
+# Cache for sessions data
+if "sessions_cache" not in st.session_state:
+    st.session_state.sessions_cache = None
+    st.session_state.last_sessions_fetch = 0
+
+# Cache timeout in seconds
+CACHE_TIMEOUT = 5  # 5 seconds
 
 def upload_pdf(file) -> Dict[str, Any]:
     """Upload and summarize a PDF file"""
@@ -95,14 +104,26 @@ def get_chat_history(session_id: str) -> List[Dict[str, Any]]:
         return []
 
 def get_all_sessions() -> List[Dict[str, Any]]:
-    """Get all chat sessions"""
+    """Get all chat sessions with caching to reduce API calls"""
+    current_time = time.time()
+    
+    # Use cached data if available and not expired
+    if (st.session_state.sessions_cache is not None and 
+        current_time - st.session_state.last_sessions_fetch < CACHE_TIMEOUT):
+        return st.session_state.sessions_cache
+    
+    # Otherwise, fetch new data
     response = requests.get(
         f"{API_URL}/sessions",
         headers=HEADERS
     )
     
     if response.status_code == 200:
-        return response.json()["sessions"]
+        sessions = response.json()["sessions"]
+        # Update cache
+        st.session_state.sessions_cache = sessions
+        st.session_state.last_sessions_fetch = current_time
+        return sessions
     elif response.status_code in [401, 403]:
         st.error("Authentication failed. Invalid API key.")
         return []

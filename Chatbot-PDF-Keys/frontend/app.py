@@ -15,7 +15,6 @@ if not API_KEY:
 
 st.set_page_config(
     page_title="Ho Thien Ty AI Assistant",
-    
     layout="wide"
 )
 
@@ -48,6 +47,8 @@ with st.sidebar:
     
     # Session management
     st.header("Previous Sessions")
+    
+    # Get sessions (will use cache if available)
     sessions = get_all_sessions()
     
     if sessions:
@@ -70,31 +71,27 @@ with st.sidebar:
             st.rerun()
 
 # Main chat interface
-st.header("Chat")
+st.subheader("Chat")
 
 # Display chat messages
 for message in st.session_state.messages:
     display_message(message["role"], message["content"])
 
 # Chat input
-if st.session_state.session_id:
-    user_input = st.text_input("Ask a question about the PDF:", key="user_input")
+user_input = st.chat_input("Type your message here...")
+
+if user_input:
+    # Add user message to chat
+    st.session_state.messages.append({"role": "user", "content": user_input})
+    display_message("user", user_input)
     
-    if user_input:
-        # Add user message to chat
-        st.session_state.messages.append({"role": "user", "content": user_input})
-        
-        # Get bot response
-        response = send_message(user_input)
-        
-        if response:
-            # Add bot response to chat
-            st.session_state.messages.append({"role": "assistant", "content": response})
-        
-        # Clear input and rerun to update chat
-        st.rerun()
-else:
-    st.info("Please upload a PDF to start chatting.")
+    # Get AI response
+    response = send_message(user_input)
+    
+    if response:
+        # Add AI response to chat
+        st.session_state.messages.append({"role": "assistant", "content": response})
+        display_message("assistant", response)
 
 # Footer
 st.divider()
