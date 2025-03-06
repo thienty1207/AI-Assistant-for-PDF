@@ -22,15 +22,14 @@ provide efficient responses.
 
 ## Project Structure 
 - backend/
- - main.py  # FastAPI application 
- - db.py  # SQLite database setup 
- - summarizer.py  # PDF processing and summarization logic 
- - models.py  # Database models and schemas 
-
+  o main.py  # FastAPI application 
+  o db.py  # SQLite database setup 
+  o summarizer.py  # PDF processing and summarization logic 
+  o models.py  # Database models and schemas 
 
 - frontend/ 
- - app.py  # Streamlit application 
- - ui_helpers.py  # Helper functions for UI components 
+  o app.py  # Streamlit application 
+  o ui_helpers.py  # Helper functions for UI components 
  
 
 
