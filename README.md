@@ -45,9 +45,10 @@ provide efficient responses.
    - Streamlit provides an intuitive UI for file uploads and chat interactions. 
 
 ## Next Steps 
-• Implement backend API with FastAPI to handle file uploads and processing. 
-• Integrate LangChain with deepseek-r1:8b via Ollama. 
-• Develop frontend using Streamlit for seamless user experience. 
-• Store and retrieve chat history using SQLite. 
+- Implement backend API with FastAPI to handle file uploads and processing. 
+- Integrate LangChain with deepseek-r1:8b via Ollama. 
+- Develop frontend using Streamlit for seamless user experience. 
+- Store and retrieve chat history using SQLite. 
+
 This project aims to provide an efficient and locally hosted chatbot that can summarize PDFs and 
 maintain conversation history using cutting-edge AI models and frameworks. 
