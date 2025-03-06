@@ -1,7 +1,12 @@
 # AI-Assistant-for-PDF
 Sumarization and chat with AI through PDF we provided
 
+## Screenshots
+![Main Interface](img/interface1.png)
+*Main Interface*
 
+![Chat Interface](img/chat-interface.png)
+*Chat Interface*
 
 ## Overview 
 This document describes the development of a chatbot capable of summarizing PDF files after they are 
@@ -16,20 +21,19 @@ provide efficient responses.
 • Frontend: Streamlit (for user interaction and file upload) 
 
 ## Project Structure 
-project_root/ 
-│-- backend/ 
-│   │-- main.py  # FastAPI application 
-│   │-- db.py  # SQLite database setup 
-│   │-- summarizer.py  # PDF processing and summarization logic 
-│   │-- models.py  # Database models and schemas 
-│   └-- requirements.txt  # Backend dependencies 
-│ 
-│-- frontend/ 
-│   │-- app.py  # Streamlit application 
-│   │-- ui_helpers.py  # Helper functions for UI components 
-│   └-- requirements.txt  # Frontend dependencies 
-│ 
-└-- README.md  # Project documentation 
+- backend/
+ - main.py  # FastAPI application 
+ - db.py  # SQLite database setup 
+ - summarizer.py  # PDF processing and summarization logic 
+ - models.py  # Database models and schemas 
+
+
+- frontend/ 
+ - app.py  # Streamlit application 
+ - ui_helpers.py  # Helper functions for UI components 
+ 
+
+
 
 ## Functionality 
 1. Upload a PDF File  
