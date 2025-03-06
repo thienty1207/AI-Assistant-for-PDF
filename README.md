@@ -14,11 +14,11 @@ uploaded. The chatbot will maintain conversation history and utilize various fra
 provide efficient responses. 
 
 ## Technology Stack 
-• Backend: FastAPI (for API development) 
-• Database: SQLite (to store chat history) 
-• LLM Framework: LangChain (to manage interactions with the language model) 
-• Model: Ollama (running locally) using deepseek-r1:8b 
-• Frontend: Streamlit (for user interaction and file upload) 
+- Backend: FastAPI (for API development) 
+- Database: SQLite (to store chat history) 
+- LLM Framework: LangChain (to manage interactions with the language model) 
+- Model: Ollama (running locally) using llama3.2:3b
+- Frontend: Streamlit (for user interaction and file upload) 
 
 ## Project Structure 
 ### Backend
@@ -37,7 +37,7 @@ provide efficient responses.
    - The file is sent to the backend for processing. 
 2. **Summarization**  
    - The backend extracts text from the PDF. 
-   - LangChain interacts with deepseek-r1:8b (via Ollama) to generate a summary. 
+   - LangChain interacts with llama3.2:3b (via Ollama) to generate a summary. 
 3. **Chat with History**  
    - Users can ask questions about the uploaded document. 
    - The chatbot maintains conversation history using SQLite. 
