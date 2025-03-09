@@ -8,6 +8,9 @@ Sumarization and chat with AI through PDF we provided
 ![Chat Interface](img/chat-interface.png)
 *Chat Interface*
 
+![History Interface](img/history-interface.png)
+*History Interface*
+
 ## Overview 
 This document describes the development of a chatbot capable of summarizing PDF files after they are 
 uploaded. The chatbot will maintain conversation history and utilize various frameworks and models to 
