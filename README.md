@@ -9,6 +9,7 @@ Sumarization and chat with AI through PDF we provided
 *Chat Interface*
 
 ![History Interface](img/history-interface.png)
+
 *History Interface*
 
 ## Overview 
