@@ -1,0 +1,72 @@
+
+AI Assistant for PDF Documents
+Report #1
+I. Objective
+- This project aims to create an AI-powered chatbot with the following goals:
+1.	Process and summarize PDF documents for quick insights.
+2.	Enable contextual conversations based on document content.
+3.	Store chat history for future reference.
+4.	Provide an intuitive interface for users.
+- These objectives focus on simplifying document analysis and enhancing interaction for users like students or researchers.
+II. Methodology
+The system is built using a client-server model:
+2.1 Backend Design
+•	API: FastAPI handles RESTful endpoints for document and chat operations.
+•	Authentication: API keys secure access to services.
+•	Storage: SQLite saves chat sessions and document data.
+•	PDF Processing: PyPDF2 extracts text from PDFs.
+•	AI Engine: LangChain with Ollama (llama3.2:3b) processes text and generates responses.
+2.2 Frontend Design
+•	Interface: Streamlit creates a web-based UI.
+•	Context: Session state tracks conversation flow.
+•	Connectivity: HTTP requests link to backend APIs.
+2.3 Process
+•	User uploads a PDF via Streamlit.
+•	Backend extracts text, generates a summary, and stores it.
+•	User asks questions; AI responds using document context.
+•	Chat history is saved for continuity.
+The system was developed by first building and testing APIs, then integrating the AI model, and finally designing the UI based on initial trials.
+
+III. Tools
+•	Backend: FastAPI, SQLite, LangChain, Ollama (llama3.2:3b), PyPDF2.
+•	Frontend: Streamlit, Requests.
+These tools were selected for their efficiency, open-source nature, and compatibility with the project’s needs.
+
+IV. Results
+The implementation achieved:
+1.	Secure APIs: Endpoints require API keys.
+2.	PDF Processing: Extracts text and summarizes (e.g., a 10-page PDF into 100 words).
+3.	Chat Functionality: Delivers context-aware replies with saved history.
+4.	User Interface: Streamlit UI is simple and effective.
+4.1 Challenges
+•	Text Issues: Poorly formatted PDFs were cleaned with custom functions.
+•	Context Limits: Managed with a sliding window for long texts.
+•	Speed: Improved by using a lightweight LLM.
+4.2 Performance
+•	Processing Time: 3-5 seconds for 10 pages.
+•	Response Time: 1-2 seconds per query.
+•	Resources: Peaks at 2GB RAM, 60-80% CPU.
+V. Future Plan
+1.	Next Steps: Add metadata extraction and progress indicators.
+2.	Mid-term: Support more file types and document comparison.
+3.	Long-term: Enable multi-user access and annotations.
+VI. GitHub Repository: https://github.com/username/AI-Assistant-for-PDF
+The repository includes all code, sample PDFs, and a README with setup steps for duplication.
+
+
+6.1 Setup Guide
+•	Requirements: Python 3.9+, Ollama, 8GB RAM.
+•	Steps:
+1.	Clone: git clone https://github.com/username/AI-Assistant-for-PDF
+2.	Install: pip install -r requirements.txt
+3.	Add API key:  .env.
+4.	Run backend: uvicorn main:app --reload
+5.	Run frontend: streamlit run app.py
+VII. References
+1.	FastAPI Docs: https://fastapi.tiangolo.com/
+2.	LangChain Guide: https://python.langchain.com/docs/
+3.	PyPDF2 Docs: https://pypdf2.readthedocs.io/
+4.	Streamlit Docs: https://docs.streamlit.io/
+5.	Ollama Repo: https://github.com/ollama/ollama
+VIII. Conclusion
+This report documents a working AI assistant for PDFs, combining document processing and conversational AI. The GitHub code allows replication, and future updates will enhance its capabilities.
